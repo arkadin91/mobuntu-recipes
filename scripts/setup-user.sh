@@ -1,7 +1,7 @@
 #!/bin/sh
 
-USERNAME="phone"
-PASSWORD="Ubuntuarm!23"
+USERNAME="mobuntu"
+PASSWORD="mobuntu1234"
 
 adduser --gecos "${USERNAME}" --disabled-password --shell /bin/bash "${USERNAME}"
 adduser "${USERNAME}" sudo

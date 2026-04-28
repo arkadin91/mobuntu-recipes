@@ -2,10 +2,9 @@
 
 set -x
 
+echo "Update full source.list"
 apt-get update
 apt-get full-upgrade -y
-apt-get install -y pipewire* alsa* zstd zarchive-tools
-apt purge -y alsa-hdspe*
+
+echo "Remove for sucesfull generated initrd"
 rm -rf /etc/kernel/postinst.d/dkms
-dpkg -i --force-overwrite /opt/*.deb
-apt-get install -y linux-image-6.18-sdm845 linux-headers-6.18-sdm845
