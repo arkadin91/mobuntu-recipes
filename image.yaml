@@ -1,6 +1,6 @@
-{{- $image := or .image "mobuntu-sdm845-`date +%Y%m%d`.img" -}}
+{{- $image := or .image "mobuntu-sdm845.img" -}}
 {{- $rootfs:= or .rootfs "mobuntu-rootfs-sdm845.tar.gz" -}}
-{{- $environment := or .environment "phosh" -}}
+{{- $environment := or .environment "ubuntu-desktop" -}}
 
 architecture: arm64
 
@@ -15,12 +15,7 @@ actions:
     destination: /
 
   - action: recipe
-    recipe: packages/packages-{{ $environment }}.yaml
-
-  - action: run
-    chroot: true
-    description: Install firmware
-    script: scripts/install-firmware.sh
+    recipe: recipes/packages-{{ $environment }}.yaml
 
   - action: image-partition
     description: Creating image
@@ -45,14 +40,14 @@ actions:
 
   - action: run
     chroot: true
+    description: Install firmware
+    script: scripts/install-firmware.sh
+    
+  - action: run
+    chroot: true
     script: scripts/final.sh
     
   - action: run
     description: Pull out rootfs image
     postprocess: true
-    command: dd if={{ $image }} skip=17408 of=rootfs-{{ $image }}.img bs=1M status=progress
-
-#  - action: run
-#    description: Add compressed image file
-#    postprocess: true
-#    command: gzip -v -f -k {{ $image }}
+    command: dd if={{ $image }} skip=17408 of=root-{{ $image }} iflag=skip_bytes,count_bytes && e2fsck -fy root-{{ $image }} && resize2fs -f -M root-{{ $image }}
