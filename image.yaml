@@ -1,0 +1,58 @@
+{{- $image := or .image "mobuntu-sdm845-`date +%Y%m%d`.img" -}}
+{{- $rootfs:= or .rootfs "mobuntu-rootfs-sdm845.tar.gz" -}}
+{{- $environment := or .environment "phosh" -}}
+
+architecture: arm64
+
+actions:
+  - action: unpack
+    description: Unpack root filesystem
+    compression: gz
+    file: {{ $rootfs }}
+
+  - action: overlay
+    source: overlays
+    destination: /
+
+  - action: recipe
+    recipe: packages/packages-{{ $environment }}.yaml
+
+  - action: run
+    chroot: true
+    description: Install firmware
+    script: scripts/install-firmware.sh
+
+  - action: image-partition
+    description: Creating image
+    imagename: {{ $image }}
+    imagesize: 10GB
+    partitiontype: gpt
+    mountpoints:
+      - mountpoint: /
+        partition: mobuntu
+    partitions:
+      - name: mobuntu
+        fs: ext4
+        start: 0M
+        end: 100%
+
+  - action: filesystem-deploy
+    description: Deploying filesystem into image
+    
+  - action: run
+    chroot: true
+    script: scripts/update-apt.sh
+
+  - action: run
+    chroot: true
+    script: scripts/final.sh
+    
+  - action: run
+    description: Pull out rootfs image
+    postprocess: true
+    command: dd if={{ $image }} skip=17408 of=rootfs-{{ $image }}.img bs=1M status=progress
+
+#  - action: run
+#    description: Add compressed image file
+#    postprocess: true
+#    command: gzip -v -f -k {{ $image }}

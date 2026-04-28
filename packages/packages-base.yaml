@@ -1,0 +1,8 @@
+{{- $architecture := or .architecture "arm64" -}}
+
+architecture: {{ $architecture }}
+
+actions:
+  - action: apt
+    description: Install base packages
+    packages: [ca-certificates, locales, nano, curl, wget, apt-utils, netplan.io, git, zstd, man-db, bash-completion, kmod, cpio, initramfs-tools, initramfs-tools-bin, initramfs-tools-core, sudo, systemd, systemd-sysv, gdisk, parted, linux-base, util-linux, rfkill, file, findutils, ntpsec, bc, net-tools, network-manager, modemmanager, bluez, gnupg2, blueman, bluez, binutils, qrtr-tools, rmtfs, protection-domain-mapper, qcom-phone-utils, tqftpserv, hexagonrpcd, abootimg, extrepo]

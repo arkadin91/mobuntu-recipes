@@ -1,0 +1,14 @@
+{{- $architecture := or .architecture "arm64" -}}
+
+architecture: {{ $architecture }}
+
+actions:
+  - action: apt
+    recommends: true
+    description: Install lomiri packages
+    packages:
+      - task-lomiri-tablet
+      - gnome-software-plugin-deb
+      - gnome-software-plugin-snap
+      - lightdm*
+      - maliit*
