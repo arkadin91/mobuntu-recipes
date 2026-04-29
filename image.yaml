@@ -15,7 +15,7 @@ actions:
     destination: /
 
   - action: recipe
-    recipe: recipes/packages-{{ $environment }}.yaml
+    recipe: packages/packages-{{ $environment }}.yaml
 
   - action: image-partition
     description: Creating image
@@ -38,10 +38,9 @@ actions:
     chroot: true
     script: scripts/update-apt.sh
 
-  - action: run
-    chroot: true
-    description: Install firmware
-    script: scripts/install-firmware.sh
+  - action: overlay
+    source: files
+    destination: /opt/
     
   - action: run
     chroot: true
