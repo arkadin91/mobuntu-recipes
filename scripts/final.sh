@@ -20,5 +20,13 @@ echo "nameserver 1.1.1.1" > /etc/resolv.conf
 echo "Clean packages"
 apt-get -y autoremove --purge
 
+echo "Disable verify gnome-shell-extension"
+gsettings set org.gnome.shell disable-extension-version-validation true
+
+echo "Enabling shell-extensions"
+gnome-extensions enable aurora-shell@luminusos.github.io
+gnome-extensions enable touchup@mityax
+gnome-extensions enable user-theme@gnome-shell-extensions.gcampax.github.com
+
 echo "For resizing rootfs partition"
 systemctl enable grow-rootfs.service

@@ -1,6 +1,5 @@
 {{- $image := or .image "mobuntu-sdm845.img" -}}
 {{- $rootfs:= or .rootfs "mobuntu-rootfs-sdm845.tar.gz" -}}
-{{- $environment := or .environment "ubuntu-desktop" -}}
 
 architecture: arm64
 
@@ -15,7 +14,7 @@ actions:
     destination: /
 
   - action: recipe
-    recipe: packages/packages-{{ $environment }}.yaml
+    recipe: packages/packages-ubuntu-desktop.yaml
 
   - action: image-partition
     description: Creating image
