@@ -8,6 +8,7 @@ dpkg -i --force-overwrite /opt/*.deb
 echo "Fix alsa-ucm-conf"
 wget https://repo.mobian.org/pool/main/a/alsa-ucm-conf/alsa-ucm-conf_1.2.15.3-1mobian3_all.deb
 dpkg -i --force-overwrite alsa-ucm-conf_1.2.15.3-1mobian3_all.deb
+apt-mark hold alsa-ucm-conf
 
 echo "Mask for workng speakers"
 systemctl mask alsa-state alsa-restore

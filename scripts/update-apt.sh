@@ -8,3 +8,4 @@ apt-get full-upgrade -y
 
 echo "Remove for sucesfull generated initrd"
 rm -rf /etc/kernel/postinst.d/dkms
+

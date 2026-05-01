@@ -8,6 +8,6 @@ actions:
     description: Install ubuntu-desktop packages
     packages:
       - ubuntu-desktop
-      - gnome-software-*
-      - bazaar
+      - gnome-software-plugin-deb
+      - gnome-software-plugin-snap
       - gdm3
