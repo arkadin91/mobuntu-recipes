@@ -23,12 +23,18 @@ actions:
     imagesize: 10GB
     partitiontype: gpt
     mountpoints:
+      - mountpoint: /boot/efi
+        partition: esp
       - mountpoint: /
         partition: mobuntu
     partitions:
+      - name: esp
+        fs: fat32
+        start: 0MB
+        end: 512MB
       - name: mobuntu
         fs: ext4
-        start: 0M
+        start: 512MB
         end: 100%
 
   - action: filesystem-deploy
@@ -49,4 +55,4 @@ actions:
   - action: run
     description: Pull out rootfs image
     postprocess: true
-    command: dd if={{ $image }} skip=17408 of=root-{{ $image }} iflag=skip_bytes,count_bytes && e2fsck -fy root-{{ $image }} && resize2fs -f -M root-{{ $image }}
+    command: dd if={{ $image }}p1 of=esp-{{ $image }} && dd if={{ $image }}p2 of=root-{{ $image }} 

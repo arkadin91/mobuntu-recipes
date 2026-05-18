@@ -1,0 +1,1 @@
+ root=UUID=7193e7b6-75f0-43c3-95a1-17f82be95c19 earlycon console=tty0 audit=0 ro loglevel=7 rootwait
